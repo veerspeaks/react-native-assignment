@@ -1,8 +1,6 @@
 # glitch.house - Take Home Assignment
 
-**Objective**:  
-
-Implement a smooth shared transition between **2 screens** as shown below.
+**Objective**: Implement a smooth shared transition between **2 screens** as shown below.
 
 https://github.com/user-attachments/assets/31c2c3a0-3f72-4601-8fd6-8d4f2fab1896
 
