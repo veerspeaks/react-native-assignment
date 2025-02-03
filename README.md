@@ -14,7 +14,6 @@ https://github.com/user-attachments/assets/31c2c3a0-3f72-4601-8fd6-8d4f2fab1896
 ## **How?**
 
 - **Fork this repository**: This is a basic Expo app with the required fonts for the project. Fork it to get started.
-
 - **Figma Links**: [Design Link](https://www.figma.com/design/dOlm8w2Rirwe6ShzdV5bGd/glitch.house-%3C%3E-front-end-project?node-id=0-1&t=0jDJo48fHJAu8003-1), [Prototype Link](https://www.figma.com/proto/dOlm8w2Rirwe6ShzdV5bGd/glitch.house-%3C%3E-front-end-project?page-id=&node-id=0-1362&t=Sya0EtG3NJA1GN4z-1)
 
 ---
