@@ -1,4 +1,4 @@
-# glitch.house - Take Home Assignment
+# glitch.house - take home assignment
 
 **Objective**: Implement a smooth shared transition between **2 screens** as shown below.
 
