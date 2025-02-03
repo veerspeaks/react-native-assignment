@@ -4,7 +4,6 @@ below is a screen recording of a figma prototype where a student selects tracks 
 
 https://github.com/user-attachments/assets/31c2c3a0-3f72-4601-8fd6-8d4f2fab1896
 
----
 
 ### **requirements:**
 
