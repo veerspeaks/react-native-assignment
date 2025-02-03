@@ -1,50 +1,34 @@
-# Welcome to your Expo app 👋
+# glitch.house - Take Home Assignment
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Objective**:  
 
-## Get started
+Implement a smooth shared transition between **2 screens** as shown below.
 
-1. Install dependencies
+https://github.com/user-attachments/assets/31c2c3a0-3f72-4601-8fd6-8d4f2fab1896
 
-   ```bash
-   npm install
-   ```
+- Implement both screens: **Main Page** & **Detail Page** *(refer to the Figma link for full details).*
+- When the user taps or clicks on the card, it should animate seamlessly from its position on the Main Screen to its new layout on the Detail Screen using a shared element transition *(as shown in the video).*
 
-2. Start the app
+---
 
-   ```bash
-    npx expo start
-   ```
+## **How?**
 
-In the output, you'll find options to open the app in a
+- **Fork this repository**: This is a basic Expo app with the required fonts for the project. Fork it to get started.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **Figma Links**: [Design Link](https://www.figma.com/design/dOlm8w2Rirwe6ShzdV5bGd/glitch.house-%3C%3E-front-end-project?node-id=0-1&t=0jDJo48fHJAu8003-1), [Prototype Link](https://www.figma.com/proto/dOlm8w2Rirwe6ShzdV5bGd/glitch.house-%3C%3E-front-end-project?page-id=&node-id=0-1362&t=Sya0EtG3NJA1GN4z-1)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## **How to Submit?**
 
-When you're ready, run:
+Submit a PR to this repository from your forked repo. Your PR additionally should include:
 
-```bash
-npm run reset-project
-```
+- A **screen recording** showing your implementation, including the transition.
+- An **Expo Go link** *(refer to [this guide](https://docs.expo.dev/develop/development-builds/share-with-your-team/)).*
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## **Criteria**
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- The animation between the two screens should be **smooth** – follow the video as a guide for how it should look.
+- The user interface should **match the Figma designs accurately**.
