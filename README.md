@@ -1,4 +1,4 @@
-# glitch.house - Take-Home Assignment
+# glitch.house - take home assignment
 
 Below is a screen recording of a Figma prototype where a student selects tracks in our app. The goal is to replicate the shared element transition shown in the video as smoothly as possible using React Native and Expo. 
 
