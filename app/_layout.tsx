@@ -14,7 +14,10 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    CircularBook: require('../assets/fonts/CircularStd-Book.otf'),
+    CircularLight: require('../assets/fonts/CircularStd-Light.otf'),
+    CooperHewittMedium: require('../assets/fonts/CooperHewitt-Medium.otf'),
+    NTBrickSans: require('../assets/fonts/NTBrickSans.ttf'),
   });
 
   useEffect(() => {
