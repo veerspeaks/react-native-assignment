@@ -1,8 +1,12 @@
 # glitch.house - take home assignment
 
-**Objective**: Implement a smooth shared transition between **2 screens** as shown below.
+
+**Context**: 
+Below is screen recording of a Figma prototype where student chooses tracks in our app. Goal is replicate the _shared element transition_ as shown in the video, as smooth as possible using React Native and Expo.
 
 https://github.com/user-attachments/assets/31c2c3a0-3f72-4601-8fd6-8d4f2fab1896
+
+
 
 - Implement both screens: **Main Page** & **Detail Page** *(refer to the Figma link for full details).*
 - When the user taps or clicks on the card, it should animate seamlessly from its position on the Main Screen to its new layout on the Detail Screen using a shared element transition *(as shown in the video).*
