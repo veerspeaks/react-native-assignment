@@ -24,7 +24,7 @@ https://github.com/user-attachments/assets/31c2c3a0-3f72-4601-8fd6-8d4f2fab1896
 
 ---
 
-### **Submission Requirements:**
+### **How to Submit?:**
 
 - Submit a **Pull Request (PR)** to this repository from your forked repo.
 - Include the following in your PR:
@@ -32,3 +32,7 @@ https://github.com/user-attachments/assets/31c2c3a0-3f72-4601-8fd6-8d4f2fab1896
   - An **Expo Go link** for your project *(refer to the [Expo sharing guide](https://docs.expo.dev/develop/development-builds/share-with-your-team/)).*
 
 ---
+
+### **Contact:**
+
+You can reach out for any questions or clarifications at whatsapp (+91-8368246974) or email (hello@glitch.house)
