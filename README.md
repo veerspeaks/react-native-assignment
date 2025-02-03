@@ -8,7 +8,7 @@ https://github.com/user-attachments/assets/31c2c3a0-3f72-4601-8fd6-8d4f2fab1896
 
 - Implement **both screens**: **Main Page** & **Detail Page** *(refer to the Figma link for full details).*
 - When the user taps on the card, it should animate seamlessly from its position on the Main Screen to its new layout on the Detail Screen using a **shared element transition** *(as shown in the video).*
-- Ensure the animation between the two screens is **smooth** – follow the video as a guide for animation timing and fluidity. (See react-native-reanimated)
+- Ensure the animation between the two screens is **smooth** – follow the video as a guide for animation timing and fluidity (check react-native-reanimated).
 - The user interface must **match the Figma designs accurately**.
 
 ---
