@@ -12,7 +12,6 @@ https://github.com/user-attachments/assets/31c2c3a0-3f72-4601-8fd6-8d4f2fab1896
 - ensure the animation between the two screens is **smooth** – follow the video as a guide for animation timing and fluidity (check react-native-reanimated).  
 - the user interface must **match the figma designs accurately**.
 
----
 
 ### **instructions:**
 
@@ -22,8 +21,6 @@ https://github.com/user-attachments/assets/31c2c3a0-3f72-4601-8fd6-8d4f2fab1896
 2. **access figma designs:**  
    - [design link](https://www.figma.com/design/dOlm8w2Rirwe6ShzdV5bGd/glitch.house-%3C%3E-front-end-project?node-id=0-1&t=0jDJo48fHJAu8003-1)  
    - [prototype link](https://www.figma.com/proto/dOlm8w2Rirwe6ShzdV5bGd/glitch.house-%3C%3E-front-end-project?page-id=&node-id=0-1362&t=Sya0EtG3NJA1GN4z-1)
-
----
 
 ### **how to submit:**
 
