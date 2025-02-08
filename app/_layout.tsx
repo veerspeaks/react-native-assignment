@@ -34,12 +34,6 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'none' }} />
-        <Stack.Screen 
-          name="track/[id]" 
-          options={{ 
-            headerShown: true,
-            animation: 'none',
-          }} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

@@ -1,43 +1,49 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
-
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import HomeScreen from './index';
+import TrackDetailScreen from './track/[id]';
 
-export default function TabLayout() {
+// Define your navigation types
+export type RootStackParamList = {
+  Home: undefined;
+  Tabs: undefined;
+  'track/[id]': { id: string };
+};
+
+export type TabParamList = {
+  Home: undefined;
+  
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+
+export default function Navigation() {
   const colorScheme = useColorScheme();
 
   return (
-    <Tabs
+    <Stack.Navigator
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: {
-          display: 'none'
-        },
+        animation: 'none',
       }}>
-      <Tabs.Screen
-        name="index"
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
         options={{
-          title: 'Home',
-          unmountOnBlur: false,
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          animation: 'none',
         }}
       />
-      <Tabs.Screen
-        name="explore"
+      <Stack.Screen
+        name="track/[id]"
+        component={TrackDetailScreen}
         options={{
-          title: 'Explore',
-          unmountOnBlur: false,
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          animation: 'none',
+          freezeOnBlur: true,
         }}
       />
-    </Tabs>
+    </Stack.Navigator>
   );
 }
+
