@@ -4,7 +4,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { TrackCard } from '@/components/TrackCard';
 import Animated, {FadeIn} from 'react-native-reanimated';
 
-export default function HomeScreen() {
+export default function HomeScreen({}) {
   console.log('HomeScreen rendering');
   
   return (
@@ -47,7 +47,7 @@ export default function HomeScreen() {
             emoji="🌐"
             description="start building websites with html & css, the building blocks that power the web. grow into full-stack coding!"
             image={require('@/assets/images/web-dev-track.gif')}
-            href="/track/web-dev"
+            href="(tabs)/track/web-dev"
           />
         </View>
         <View style={styles.cardWrapper}>
@@ -56,7 +56,7 @@ export default function HomeScreen() {
             emoji="🤖"
             description="learn python basics and dive into ai. build practical ai apps, get hands-on with ml models and grow into ai engineering!"
             image={require('@/assets/images/ai-track.gif')}
-            href="/track/ai-python"
+            href="(tabs)/track/ai-python"
           />
         </View>
       </ScrollView>

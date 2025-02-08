@@ -1,28 +1,71 @@
 import React, { useEffect, useState } from 'react';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { Stack } from 'expo-router';
 import { StyleSheet, ScrollView, View, Pressable, Dimensions } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { ToolsSection } from '@/components/ToolsSection';
 import Animated, { 
   FadeIn,
-  FadeOut,
   withTiming,
   Easing,
   useAnimatedStyle,
+  SharedTransitionType,
+  withSpring,
+  SharedTransition,
 } from 'react-native-reanimated';
+import { RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '@/app/(tabs)/_layout';
 
 const { width } = Dimensions.get('window');
 
-export default function TrackDetailScreen() {
-  const { id } = useLocalSearchParams();
-  const [activeTrack, setActiveTrack] = useState<'web-dev' | 'ai-python'>(
-    id === 'ai-python' ? 'ai-python' : 'web-dev'
-  );
+type TrackDetailScreenProps = {
+  route: RouteProp<RootStackParamList, 'track/[id]'>;
+};
 
+//for custom shared transition
+const transition = SharedTransition.custom((values) => {
+  'worklet';
+  return {
+    height: withTiming(values.targetHeight, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
+    width: withTiming(values.targetWidth, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
+  };
+})
+  .progressAnimation((values, progress) => {
+    'worklet';
+    const getValue = (
+      progress: number,
+      target: number,
+      current: number
+    ): number => {
+      return progress * (target - current) + current;
+    };
+    return {
+      width: withTiming(values.targetWidth, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
+      height: withTiming(values.targetHeight, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
+      originX: withTiming(values.targetOriginX, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
+      originY: withTiming(values.targetOriginY, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
+    };
+  })
+  .defaultTransitionType(SharedTransitionType.ANIMATION);
+
+
+export default function TrackDetailScreen({ route }: TrackDetailScreenProps) {
+  const { id } = route.params;
+  console.log('id', id);
+  
+  // Since id is passed as a prop, it is guaranteed to be defined.
+  const [activeTrack, setActiveTrack] = useState<'web-dev' | 'ai-python'>(() => {
+    const trackId = id.toLowerCase();
+    return trackId.includes('ai') || trackId.includes('python') ? 'ai-python' : 'web-dev';
+  });   
+
+  // Optionally, update activeTrack if id changes while the component is mounted.
   useEffect(() => {
-    if (id === 'web-dev' || id === 'ai-python') {
-      setActiveTrack(id);
+    const trackId = id.toLowerCase();
+    if (trackId.includes('ai') || trackId.includes('python')) {
+      setActiveTrack('ai-python');
+    } else {
+      setActiveTrack('web-dev');
     }
   }, [id]);
 
@@ -69,10 +112,7 @@ export default function TrackDetailScreen() {
       <ThemedView style={[styles.trackSelector, { backgroundColor: '#171717' }]}>
         <Pressable 
           onPress={() => setActiveTrack('web-dev')}
-          style={({ pressed }) => [
-            styles.tabButton,
-            pressed && { opacity: 0.7 }
-          ]}
+          style={({ pressed }) => [styles.tabButton, pressed && { opacity: 0.7 }]}
         >
           <ThemedText style={[styles.trackOption, isWebTrack && styles.activeTrack]}>
             INTRO TO WEB DEV
@@ -81,35 +121,36 @@ export default function TrackDetailScreen() {
         <View style={styles.divider} />
         <Pressable 
           onPress={() => setActiveTrack('ai-python')}
-          style={({ pressed }) => [
-            styles.tabButton,
-            pressed && { opacity: 0.7 }
-          ]}
+          style={({ pressed }) => [styles.tabButton, pressed && { opacity: 0.7 }]}
         >
           <ThemedText style={[styles.trackOption, !isWebTrack && styles.activeTrack]}>
             INTRO TO AI PYTHON
           </ThemedText>
         </Pressable>
       </ThemedView>
-
+      
       {/* Content Container */}
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContentContainer}>
         <View style={styles.contentContainer}>
           <View style={styles.animatedContentWrapper}>
             <Animated.View style={webContentStyle}>
               <View style={styles.content}>
-                <Animated.View sharedTransitionTag="image-web-dev" style={styles.imageContainer}>
+                <Animated.View sharedTransitionTag="image-web-dev" sharedTransitionStyle={transition} style={styles.imageContainer}>
                   <Animated.Image
                     source={require('@/assets/images/web-dev-track.gif')}
                     style={styles.trackImage}
                   />
                 </Animated.View>
-                <Animated.Text sharedTransitionTag="title-web-dev" style={styles.title}>
-                  intro to coding with web dev 🌐
-                </Animated.Text>
-                <ThemedText style={styles.description}>
-                  start building websites with html & css, the building blocks that power the web. grow into full-stack coding!
-                </ThemedText>
+                <Animated.View  sharedTransitionTag="title-web-dev">
+                  <Animated.Text sharedTransitionTag="title-web-dev" sharedTransitionStyle={transition} style={styles.title}>
+                    intro to coding with web dev 🌐
+                  </Animated.Text>
+                </Animated.View>
+                <Animated.View sharedTransitionTag="description-web-dev" sharedTransitionStyle={transition}>
+                  <ThemedText style={styles.description}>
+                    start building websites with html & css, the building blocks that power the web. grow into full-stack coding!
+                  </ThemedText>
+                </Animated.View>
                 <ToolsSection />
                 <ThemedText style={styles.startTitle}>
                   let's choose your starting point{'\n'}for this track ⛳
@@ -117,11 +158,15 @@ export default function TrackDetailScreen() {
                 <ThemedView style={styles.checklistContainer}>
                   <ThemedView style={styles.checkItem}>
                     <ThemedText style={styles.checkmark}>✓</ThemedText>
-                    <ThemedText style={styles.checkText}>You are assigned sub-skill ⚡️ LEVEL 3</ThemedText>
+                    <ThemedText style={styles.checkText}>
+                      You are assigned sub-skill ⚡️ LEVEL 3
+                    </ThemedText>
                   </ThemedView>
                   <ThemedView style={styles.checkItem}>
                     <ThemedText style={styles.checkmark}>✓</ThemedText>
-                    <ThemedText style={styles.checkText}>You can change levels if you wish!</ThemedText>
+                    <ThemedText style={styles.checkText}>
+                      You can change levels if you wish!
+                    </ThemedText>
                   </ThemedView>
                 </ThemedView>
               </View>
@@ -147,11 +192,15 @@ export default function TrackDetailScreen() {
                 <ThemedView style={styles.checklistContainer}>
                   <ThemedView style={styles.checkItem}>
                     <ThemedText style={styles.checkmark}>✓</ThemedText>
-                    <ThemedText style={styles.checkText}>You are assigned sub-skill ⚡️ LEVEL 3</ThemedText>
+                    <ThemedText style={styles.checkText}>
+                      You are assigned sub-skill ⚡️ LEVEL 3
+                    </ThemedText>
                   </ThemedView>
                   <ThemedView style={styles.checkItem}>
                     <ThemedText style={styles.checkmark}>✓</ThemedText>
-                    <ThemedText style={styles.checkText}>You can change levels if you wish!</ThemedText>
+                    <ThemedText style={styles.checkText}>
+                      You can change levels if you wish!
+                    </ThemedText>
                   </ThemedView>
                 </ThemedView>
               </View>
@@ -163,10 +212,15 @@ export default function TrackDetailScreen() {
   );
 }
 
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#171717',
+  },
+  scrollView: {
+    flex: 1,
   },
   trackSelector: {
     flexDirection: 'row',
@@ -198,18 +252,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#333',
     alignSelf: 'center',
   },
-  scrollView: {
-    flex: 1,
-  },
   scrollContentContainer: {
     minHeight: '100%',
     position: 'relative',
-    marginTop: 10,
+    marginTop: 0,
   },
   contentContainer: {
     minHeight: '100%',
     position: 'relative',
-    marginTop: 10,
+    marginTop: 0,
   },
   animatedContentWrapper: {
     position: 'relative',
@@ -217,6 +268,7 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 20,
+    paddingTop: 0,
     backgroundColor: '#171717',
   },
   trackImage: {
@@ -245,13 +297,14 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   checklistContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    padding: 16,
+    backgroundColor: '#171717',
+    padding: 10,
     borderRadius: 12,
     marginBottom: 16,
   },
   checkItem: {
     flexDirection: 'row',
+    backgroundColor: '#171717',
     alignItems: 'flex-start',
     gap: 12,
   },

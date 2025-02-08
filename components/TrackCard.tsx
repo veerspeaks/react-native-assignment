@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Image, ImageSourcePropType, Dimensions, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '@/app/(tabs)/_layout';
 import * as Haptics from 'expo-haptics';
 import { ThemedText } from './ThemedText';
 import { ThemedView } from './ThemedView';
@@ -11,12 +13,15 @@ interface TrackCardProps {
   description: string;
   image: ImageSourcePropType;
   emoji: string;
-  href: `/track/${string}`;
+  href: string;
 }
 
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
 export function TrackCard({ title, description, image, emoji, href }: TrackCardProps) {
-  const router = useRouter();
+  const navigation = useNavigation<NavigationProp>();
   const trackId = href.split('/').pop()!;
+  console.log('trackId', trackId);
   
 
   const handlePress = () => {
@@ -24,19 +29,13 @@ export function TrackCard({ title, description, image, emoji, href }: TrackCardP
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
     
-    setTimeout(() => {
-      try {
-        router.push(href);
-      } catch (error) {
-        console.error('Navigation failed:', error);
-      }
-    }, 50);
+    navigation.navigate('(tabs)', { screen: 'track/[id]', params: { id: trackId } });
   };
 
   return (
     <Pressable onPress={handlePress} style={styles.card}>
       <ThemedView style={styles.card}>
-        <Animated.View entering={FadeIn.duration(500)} style={styles.imageContainer} sharedTransitionTag={`image-${trackId}`}>
+        <Animated.View  style={styles.imageContainer} sharedTransitionTag={`image-${trackId}`}>
           <Animated.Image 
             source={image} 
             style={styles.image} 
@@ -44,12 +43,12 @@ export function TrackCard({ title, description, image, emoji, href }: TrackCardP
           />
         </Animated.View>
         <ThemedView style={styles.content}>
-          <Animated.View entering={FadeIn.duration(500)} sharedTransitionTag={`title-${trackId}`}>
+          <Animated.View sharedTransitionTag={`title-${trackId}`}>
             <Animated.Text style={styles.title}>
               intro to coding with {title} {emoji}
             </Animated.Text>
           </Animated.View>
-          <Animated.View entering={FadeIn.duration(500)} sharedTransitionTag={`description-${trackId}`}>
+          <Animated.View sharedTransitionTag={`description-${trackId}`}>
             <Animated.Text style={styles.description}>
               {description}
             </Animated.Text>
