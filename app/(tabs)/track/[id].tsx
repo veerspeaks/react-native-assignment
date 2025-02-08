@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
-import { StyleSheet, ScrollView, View, Pressable, Dimensions } from 'react-native';
+import { StyleSheet, ScrollView, View, Pressable, Dimensions, Image } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { ToolsSection } from '@/components/ToolsSection';
@@ -26,27 +26,29 @@ type TrackDetailScreenProps = {
 const transition = SharedTransition.custom((values) => {
   'worklet';
   return {
-    height: withTiming(values.targetHeight, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
-    width: withTiming(values.targetWidth, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
+    height: withSpring(values.targetHeight, {
+      mass: 0.3,
+      stiffness: 100,
+      damping: 10
+    }),
+    width: withSpring(values.targetWidth, {
+      mass: 0.3,
+      stiffness: 100,
+      damping: 10
+    }),
+    originX: withSpring(values.targetOriginX, {
+      mass: 0.3,
+      stiffness: 100,
+      damping: 10
+    }),
+    originY: withSpring(values.targetOriginY, {
+      mass: 0.3,
+      stiffness: 100,
+      damping: 10
+    }),
   };
 })
-  .progressAnimation((values, progress) => {
-    'worklet';
-    const getValue = (
-      progress: number,
-      target: number,
-      current: number
-    ): number => {
-      return progress * (target - current) + current;
-    };
-    return {
-      width: withTiming(values.targetWidth, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
-      height: withTiming(values.targetHeight, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
-      originX: withTiming(values.targetOriginX, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
-      originY: withTiming(values.targetOriginY, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
-    };
-  })
-  .defaultTransitionType(SharedTransitionType.ANIMATION);
+.defaultTransitionType(SharedTransitionType.ANIMATION);
 
 
 export default function TrackDetailScreen({ route }: TrackDetailScreenProps) {
@@ -135,12 +137,21 @@ export default function TrackDetailScreen({ route }: TrackDetailScreenProps) {
           <View style={styles.animatedContentWrapper}>
             <Animated.View style={webContentStyle}>
               <View style={styles.content}>
-                <Animated.View sharedTransitionTag="image-web-dev" sharedTransitionStyle={transition} style={styles.imageContainer}>
-                  <Animated.Image
-                    source={require('@/assets/images/web-dev-track.gif')}
-                    style={styles.trackImage}
-                  />
-                </Animated.View>
+                <View style={styles.imageWrapper}>
+                  <Animated.View sharedTransitionTag={`image-${activeTrack}`} sharedTransitionStyle={transition} style={styles.imageContainer}>
+                    <Animated.Image
+                      source={require('@/assets/images/web-dev-track.gif')}
+                      style={styles.trackImage}
+                      resizeMode="cover"
+                    />
+                  </Animated.View>
+                  <View style={styles.levelBadge}>
+                    <Image 
+                      source={require('@/assets/images/level.png')} 
+                      style={styles.levelImage}
+                    />
+                  </View>
+                </View>
                 <Animated.View  sharedTransitionTag="title-web-dev">
                   <Animated.Text sharedTransitionTag="title-web-dev" sharedTransitionStyle={transition} style={styles.title}>
                     intro to coding with web dev 🌐
@@ -173,12 +184,21 @@ export default function TrackDetailScreen({ route }: TrackDetailScreenProps) {
             </Animated.View>
             <Animated.View style={aiContentStyle}>
               <View style={styles.content}>
-                <Animated.View sharedTransitionTag="image-ai-python" style={styles.imageContainer}>
-                  <Animated.Image
-                    source={require('@/assets/images/ai-track.gif')}
-                    style={styles.trackImage}
-                  />
-                </Animated.View>
+                <View style={styles.imageWrapper}>
+                  <Animated.View sharedTransitionTag={`image-${activeTrack}`} style={styles.imageContainer}>
+                    <Animated.Image
+                      source={require('@/assets/images/ai-track.gif')}
+                      style={styles.trackImage}
+                      resizeMode="cover"
+                    />
+                  </Animated.View>
+                  <View style={styles.levelBadge}>
+                    <Image 
+                      source={require('@/assets/images/level.png')} 
+                      style={styles.levelImage}
+                    />
+                  </View>
+                </View>
                 <Animated.Text sharedTransitionTag="title-ai-python" style={styles.title}>
                   intro to coding with ai python 🤖
                 </Animated.Text>
@@ -275,7 +295,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 240,
     borderRadius: 12,
-    marginBottom: 30,
+    marginTop: 10,
   },
   title: {
     fontSize: 28,
@@ -319,9 +339,30 @@ const styles = StyleSheet.create({
     fontFamily: 'CircularBook',
     flex: 1,
   },
+  imageWrapper: {
+    position: 'relative',
+    marginBottom: 30,
+  },
   imageContainer: {
     overflow: 'hidden',
     borderRadius: 12,
-    marginBottom: 30,
+  },
+  levelBadge: {
+    position: 'absolute',
+    right: 12,
+    top: 12,
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  levelText: {
+    color: '#00FF9D',
+    fontSize: 16,
+    fontFamily: 'NTBrickSans',
+    marginBottom: 4,
+  },
+  levelImage: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
   },
 }); 
