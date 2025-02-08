@@ -2,6 +2,7 @@ import { StyleSheet, ScrollView, View, Image } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { TrackCard } from '@/components/TrackCard';
+import Animated, {FadeIn} from 'react-native-reanimated';
 
 export default function HomeScreen() {
   console.log('HomeScreen rendering');

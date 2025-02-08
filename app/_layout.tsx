@@ -8,8 +8,8 @@ import 'react-native-reanimated';
 import 'react-native-gesture-handler';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+// // Prevent the splash screen from auto-hiding before asset loading is complete.
+// SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -33,8 +33,13 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="track/[id]" options={{ headerShown: true }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'none' }} />
+        <Stack.Screen 
+          name="track/[id]" 
+          options={{ 
+            headerShown: true,
+            animation: 'none',
+          }} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

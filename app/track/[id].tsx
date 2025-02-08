@@ -1,41 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Stack, useLocalSearchParams } from 'expo-router';
-import { StyleSheet, Image, ScrollView, View, Pressable, Dimensions } from 'react-native';
+import { StyleSheet, ScrollView, View, Pressable, Dimensions } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { ToolsSection } from '@/components/ToolsSection';
 import Animated, { 
-  useAnimatedStyle,
+  FadeIn,
+  FadeOut,
   withTiming,
   Easing,
-  SharedTransition,
-  withSpring
+  useAnimatedStyle,
 } from 'react-native-reanimated';
 
 const { width } = Dimensions.get('window');
-
-const springConfig = {
-  mass: 0.5,
-  damping: 15,
-  stiffness: 120,
-  overshootClamping: false,
-  restDisplacementThreshold: 0.01,
-  restSpeedThreshold: 0.01,
-};
-
-// Add sharedTransition before the component definition
-const sharedTransition = SharedTransition.custom((values) => {
-  'worklet';
-  return {
-    height: withSpring(values.targetHeight, springConfig),
-    width: withSpring(values.targetWidth, springConfig),
-    originX: withSpring(values.targetOriginX, springConfig),
-    originY: withSpring(values.targetOriginY, springConfig),
-    transform: [
-      { scale: withSpring(values.targetWidth / values.currentWidth, springConfig) }
-    ],
-  };
-});
 
 export default function TrackDetailScreen() {
   const { id } = useLocalSearchParams();
@@ -121,22 +98,13 @@ export default function TrackDetailScreen() {
           <View style={styles.animatedContentWrapper}>
             <Animated.View style={webContentStyle}>
               <View style={styles.content}>
-                <Animated.View 
-                  sharedTransitionTag="container-web-dev"
-                  sharedTransitionStyle={sharedTransition}
-                  style={styles.imageContainer}
-                >
+                <Animated.View sharedTransitionTag="image-web-dev" style={styles.imageContainer}>
                   <Animated.Image
-                    sharedTransitionTag="image-web-dev"
-                    sharedTransitionStyle={sharedTransition}
                     source={require('@/assets/images/web-dev-track.gif')}
                     style={styles.trackImage}
                   />
                 </Animated.View>
-                <Animated.Text 
-                  sharedTransitionTag="title-web-dev"
-                  style={styles.title}
-                >
+                <Animated.Text sharedTransitionTag="title-web-dev" style={styles.title}>
                   intro to coding with web dev 🌐
                 </Animated.Text>
                 <ThemedText style={styles.description}>
@@ -160,22 +128,13 @@ export default function TrackDetailScreen() {
             </Animated.View>
             <Animated.View style={aiContentStyle}>
               <View style={styles.content}>
-                <Animated.View 
-                  sharedTransitionTag="container-ai-python"
-                  sharedTransitionStyle={sharedTransition}
-                  style={styles.imageContainer}
-                >
+                <Animated.View sharedTransitionTag="image-ai-python" style={styles.imageContainer}>
                   <Animated.Image
-                    sharedTransitionTag="image-ai-python"
-                    sharedTransitionStyle={sharedTransition}
                     source={require('@/assets/images/ai-track.gif')}
                     style={styles.trackImage}
                   />
                 </Animated.View>
-                <Animated.Text 
-                  sharedTransitionTag="title-ai-python"
-                  style={styles.title}
-                >
+                <Animated.Text sharedTransitionTag="title-ai-python" style={styles.title}>
                   intro to coding with ai python 🤖
                 </Animated.Text>
                 <ThemedText style={styles.description}>

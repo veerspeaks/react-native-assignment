@@ -1,17 +1,10 @@
 import React from 'react';
-import { StyleSheet, Image, ImageSourcePropType, Dimensions, TouchableOpacity, Pressable } from 'react-native';
-import { Link, useRouter } from 'expo-router';
+import { StyleSheet, Image, ImageSourcePropType, Dimensions, Pressable } from 'react-native';
+import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { ThemedText } from './ThemedText';
 import { ThemedView } from './ThemedView';
-import Animated, {
-  SharedTransition,
-  withSpring,
-  withTiming,
-  Easing,
-} from 'react-native-reanimated';
-
-console.log('TrackCard component file is being loaded');
+import Animated, {FadeIn} from 'react-native-reanimated';
 
 interface TrackCardProps {
   title: string;
@@ -21,83 +14,43 @@ interface TrackCardProps {
   href: `/track/${string}`;
 }
 
-const springConfig = {
-  mass: 0.5,
-  damping: 15,
-  stiffness: 120,
-  overshootClamping: false,
-  restDisplacementThreshold: 0.01,
-  restSpeedThreshold: 0.01,
-};
-
-const sharedTransition = SharedTransition.custom((values) => {
-  'worklet';
-  return {
-    height: withSpring(values.targetHeight, springConfig),
-    width: withSpring(values.targetWidth, springConfig),
-    originX: withSpring(values.targetOriginX, springConfig),
-    originY: withSpring(values.targetOriginY, springConfig),
-    transform: [
-      { scale: withSpring(values.targetWidth / values.currentWidth, springConfig) }
-    ],
-  };
-});
-
 export function TrackCard({ title, description, image, emoji, href }: TrackCardProps) {
   const router = useRouter();
   const trackId = href.split('/').pop()!;
+  
 
   const handlePress = () => {
     if (process.env.EXPO_OS === 'ios') {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
     
-    try {
-      router.push(href);
-    } catch (error) {
-      console.error('Navigation failed:', error);
-    }
+    setTimeout(() => {
+      try {
+        router.push(href);
+      } catch (error) {
+        console.error('Navigation failed:', error);
+      }
+    }, 50);
   };
 
   return (
-    <Pressable  
-      onPress={handlePress}
-      style={styles.card}
-    >
+    <Pressable onPress={handlePress} style={styles.card}>
       <ThemedView style={styles.card}>
-        <Animated.View 
-          sharedTransitionTag={`container-${trackId}`}
-          sharedTransitionStyle={sharedTransition}
-          style={styles.imageContainer}
-        >
+        <Animated.View entering={FadeIn.duration(500)} style={styles.imageContainer} sharedTransitionTag={`image-${trackId}`}>
           <Animated.Image 
-            sharedTransitionTag={`image-${trackId}`}
-            sharedTransitionStyle={sharedTransition}
             source={image} 
             style={styles.image} 
             resizeMode="cover" 
           />
         </Animated.View>
         <ThemedView style={styles.content}>
-          <Animated.View 
-            sharedTransitionTag={`title-container-${trackId}`}
-            sharedTransitionStyle={sharedTransition}
-          >
-            <Animated.Text 
-              sharedTransitionTag={`title-${trackId}`}
-              style={styles.title}
-            >
+          <Animated.View entering={FadeIn.duration(500)} sharedTransitionTag={`title-${trackId}`}>
+            <Animated.Text style={styles.title}>
               intro to coding with {title} {emoji}
             </Animated.Text>
           </Animated.View>
-          <Animated.View 
-            sharedTransitionTag={`desc-container-${trackId}`}
-            sharedTransitionStyle={sharedTransition}
-          >
-            <Animated.Text 
-              sharedTransitionTag={`desc-${trackId}`}
-              style={styles.description}
-            >
+          <Animated.View entering={FadeIn.duration(500)} sharedTransitionTag={`description-${trackId}`}>
+            <Animated.Text style={styles.description}>
               {description}
             </Animated.Text>
           </Animated.View>
@@ -111,8 +64,6 @@ export function TrackCard({ title, description, image, emoji, href }: TrackCardP
     </Pressable>
   );
 }
-
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   card: {
